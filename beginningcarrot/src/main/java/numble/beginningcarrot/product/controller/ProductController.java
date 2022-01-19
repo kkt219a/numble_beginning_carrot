@@ -2,6 +2,7 @@ package numble.beginningcarrot.product.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,7 +55,7 @@ public class ProductController {
 	 * 특정 Product 삭제
 	 * @param productId product의 Id
 	 */
-	@PatchMapping("/{productId}")
+	@DeleteMapping("/{productId}")
 	public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
 		return ResponseEntity.ok().build();
 	}

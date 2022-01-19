@@ -1,0 +1,27 @@
+.tabbox {
+    margin-left: 9%;
+    display: inline-block;
+    width: 35%;
+    height: 100%;
+    text-align: center;
+    float:left;
+}
+.boximage {
+    width: 80px;
+    height: 80px;
+}
+.tabfont {
+    font-weight: 900;
+    font-size: 25px;
+}
+
+.itembox {
+    margin-top:5%;
+    margin-bottom:5%;
+    padding-left:5%;
+    padding-right:5%;
+    height: 280px;
+    display: inline-block;
+    width: 100%;
+}
+
