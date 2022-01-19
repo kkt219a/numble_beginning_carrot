@@ -1,7 +1,10 @@
 package numble.beginningcarrot.product.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -10,18 +13,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
+import numble.beginningcarrot.product.domain.Product;
+import numble.beginningcarrot.product.service.ProductService;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/product")
 public class ProductController {
 
+	private final ProductService productService;
 	/**
 	 * Product를 페이지 별로 DTO로 반환
 	 */
 	@GetMapping
-	public ResponseEntity<Void> findAllProduct() {
-		return ResponseEntity.ok().build();
+	public String findAllProduct(Model model) {
+		List<Product> products = productService.findAll();
+		model.addAttribute("products", products);
+		return "home";
 	}
 
 	/**
