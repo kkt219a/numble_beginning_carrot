@@ -1,5 +1,6 @@
 application-local.yml
 application-prod.yml
+aws.yml
 
 HELP.md
 .gradle
