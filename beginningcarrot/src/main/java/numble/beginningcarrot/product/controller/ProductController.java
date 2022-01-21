@@ -32,6 +32,11 @@ public class ProductController {
 		return "home";
 	}
 
+	@GetMapping("/new")
+	public String createProductForm() {
+		return "new_product";
+	}
+
 	/**
 	 * 특정 Product 상세보기
 	 * @param productId product의 Id
