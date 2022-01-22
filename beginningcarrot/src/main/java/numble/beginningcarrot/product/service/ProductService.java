@@ -22,5 +22,6 @@ public class ProductService {
 	}
 
 	public void addProduct(Product product, List<MultipartFile> images) {
+
 	}
 }

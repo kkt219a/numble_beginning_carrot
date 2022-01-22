@@ -54,7 +54,11 @@
             </div>
         </div>
     </th:block>
-
+    <div>
+        <a th:href="@{/products/new}">
+            <img src="/image/logo/add.png" style="width: 150px; height: 150px; position: fixed; bottom: 160px; right: 30px;" />
+        </a>
+    </div>
     <div th:replace="fragments/tab :: tab" />
 </div> <!-- /container -->
 </body>

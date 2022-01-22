@@ -57,6 +57,10 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 15px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 2;
 }
 
 .top_stack_arrow {

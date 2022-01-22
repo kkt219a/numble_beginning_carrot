@@ -1,10 +1,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Hello</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-
       ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
@@ -14,77 +14,102 @@
 </head>
 
 <body>
-    <form role="form" method="POST" action="">
-        <div class = "top_stack_div">
-            <img src="/image/logo/arrow.png" class = "top_stack_arrow">
-            <span class = "top_stack_title">중고거래 글쓰기</span>
-            <button type="submit"style="color:orange;" class = "btn top_stack_button">완료</button>
+<form role="form" id="createForm" th:object="${productForm}">
+    <div class="top_stack_div">
+        <a th:href="@{/products}">
+            <img src="/image/logo/arrow.png" class="top_stack_arrow">
+        </a>
+        <span class="top_stack_title">중고거래 글쓰기</span>
+        <button onclick="register()" type="button" style="color:orange;" class="btn top_stack_button">완료</button>
+    </div>
+    <div id="image_container"
+         style="padding-bottom: 20px; width: 100%;height: 140px; display: flex; overflow-x: scroll; border-bottom: 2px solid #e5e5e5;">
+        <div class="preview_box" style="margin-left: 20px">
+            <label for="image" class="preview" style="display: flex; justify-content: center; align-items: center;">
+                <img src="/image/logo/camera.png" style="width:20px; height: 20px; margin-right:10px;">
+                <span id="photoNumber" style="color:red">0</span>/10
+            </label>
+            <input style="display: none" name="files[]" type="file" id="image" accept="image/*" multiple/>
         </div>
-        <div id="image_container" style = "padding-bottom: 20px; width: 100%;height: 140px; display: flex; overflow-x: scroll; border-bottom: 2px solid #e5e5e5;">
-            <div class="preview_box" style="margin-left: 20px">
-                <label for="image" class="preview" style="display: flex; justify-content: center; align-items: center;">
-                    <img src="/image/logo/camera.png" style="width:20px; height: 20px; margin-right:10px;">
-                    <span id="photoNumber" style="color:red">0</span>/10
-                </label>
-                <input style = "display: none" name="files[]" type="file" id="image" accept="image/*"  multiple/>
-            </div>
-        </div>
-        <div>
-            <input type="text" id="title" placeholder="제목" class = "form-control form-control-custom">
-            <select id="category" class = "form-control form-control-custom">
-                <option>카테고리</option>
-            </select>
-            <input type="text" id="price" placeholder="가격(원)" class="form-control form-control-custom">
-            <textarea id = "content" placeholder="게시글 내용을 작성해주세요." class="form-control form-control-custom" style="height:250px"></textarea>
-        </div>
-    </form>
-    <script>
-        var defaultImages = [];
-        var updateImages = [];
-        var deleteImageNames = [];
-        function imgRemove(obj, local) {
-            const preview_box = obj.parentNode;
-            const preview = preview_box.querySelector(".preview");
-            var i = -1;
-            for(var node = preview_box.previousElementSibling; node !== null ; node = node.previousElementSibling, i++);
-            if(local===true) {
-                updateImages.splice(i,1);
+    </div>
+    <div>
+        <input type="text" name="title" placeholder="제목" class="form-control form-control-custom" th:field="*{title}">
+        <select name="category" class="form-control form-control-custom">
+            <option>카테고리</option>
+            <option>가전제품</option>
+        </select>
+        <input type="number" name="price" placeholder="가격(원)" class="form-control form-control-custom"
+               th:field="*{price}">
+        <textarea name="content" placeholder="게시글 내용을 작성해주세요."
+                  class="form-control form-control-custom"
+                  style="height:250px"
+                  th:field="*{content}"
+        ></textarea>
+    </div>
+</form>
+<script>
+    let updateImages = [];
+
+    function imgRemove(obj) {
+        const preview_box = obj.parentNode;
+        const preview = preview_box.querySelector(".preview");
+        let i = -1;
+        for (let node = preview_box.previousElementSibling; node !== null; node = node.previousElementSibling, i++) ;
+        updateImages.splice(i, 1);
+        document.getElementById("image_container").removeChild(preview_box);
+        setPhotoNumber();
+    }
+
+    function register() {
+        let form = $("#createForm")[0];
+        let request = new FormData(form);
+        for (const updateImage of updateImages) {
+            request.append("images",updateImage);
+        }
+        $.ajax({
+            url: "/products/new",
+            data: request,
+            type: "POST",
+            processData: false,
+            contentType: false,
+            success: function () {
+                location.href="/products";
+            },
+            error: function (error) {
+                alert(error);
             }
-            if(local===false) {
-                defaultImages.splice(i,1);
-                deleteImageNames.push(preview.id);
-            }
-            document.getElementById("image_container").removeChild(preview_box);
+        });
+    }
+
+    $("#image").change(function () {
+        const target = document.getElementsByName('files[]');
+        if (target[0].files.length + updateImages.length > 10) {
+            alert("파일은 최대 10장까지 첨부할 수 있습니다.");
+        } else {
+            $.each(target[0].files, function (index, file) {
+                var img = document.createElement("img");
+                var div = document.createElement("div");
+                var removeImg = document.createElement("img")
+                removeImg.setAttribute("class", "preview_remove");
+                removeImg.setAttribute("src", "/image/logo/cancel.png");
+                removeImg.setAttribute("onclick", "javascript:imgRemove(this)");
+                div.setAttribute("class", "preview_box");
+                img.setAttribute("src", URL.createObjectURL(file));
+                img.setAttribute("class", "preview");
+                img.setAttribute("id", file.name);
+                div.appendChild(img);
+                div.appendChild(removeImg);
+                document.querySelector("div#image_container").appendChild(div);
+                updateImages.push(file);
+            });
             setPhotoNumber();
         }
-        $("#image").change(function () {
-            const target = document.getElementsByName('files[]');
-            if(target[0].files.length + updateImages.length + defaultImages.length > 10) {
-                alert("파일은 최대 10장까지 첨부할 수 있습니다.");
-            } else {
-                $.each(target[0].files, function (index, file) {
-                    var img = document.createElement("img");
-                    var div = document.createElement("div");
-                    var removeImg = document.createElement("img")
-                    removeImg.setAttribute("class", "preview_remove");
-                    removeImg.setAttribute("src", "/image/logo/cancel.png");
-                    removeImg.setAttribute("onclick", "javascript:imgRemove(this, true)");
-                    div.setAttribute("class", "preview_box");
-                    img.setAttribute("src", URL.createObjectURL(file));
-                    img.setAttribute("class", "preview");
-                    img.setAttribute("id", file.name);
-                    div.appendChild(img);
-                    div.appendChild(removeImg);
-                    document.querySelector("div#image_container").appendChild(div);
-                    updateImages.push(file);
-                });
-                setPhotoNumber();
-            }
-            $("#image").val("");
-        });
-        function setPhotoNumber() {
-            document.getElementById("photoNumber").innerText = updateImages.length + defaultImages.length;
-        }
-    </script>
+        $("#image").val("");
+    });
+
+    function setPhotoNumber() {
+        document.getElementById("photoNumber").innerText = updateImages.length;
+    }
+</script>
 </body>
 </html>

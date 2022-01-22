@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 import numble.beginningcarrot.product.domain.Product;
+import numble.beginningcarrot.product.dto.ProductCreateRequest;
 import numble.beginningcarrot.product.service.ProductService;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
 
 	private final ProductService productService;
@@ -33,7 +35,8 @@ public class ProductController {
 	}
 
 	@GetMapping("/new")
-	public String createProductForm() {
+	public String createProductForm(Model model) {
+		model.addAttribute("productForm",new ProductCreateRequest());
 		return "new_product";
 	}
 
@@ -50,8 +53,9 @@ public class ProductController {
 	/**
 	 * 새 Product 생성
 	 */
-	@PostMapping
-	public ResponseEntity<Void> createProduct() {
+	@PostMapping("/new")
+	public ResponseEntity<Void> createProduct(@ModelAttribute ProductCreateRequest request) {
+		productService.addProduct(request.toProduct(), request.getImages());
 		return ResponseEntity.ok().build();
 	}
 

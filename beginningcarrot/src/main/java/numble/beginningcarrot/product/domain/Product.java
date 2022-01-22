@@ -47,6 +47,13 @@ public class Product {
 		addImages(images);
 	}
 
+	public Product(String title, String content, Integer price) {
+		this.title = title;
+		this.content = content;
+		this.price = price;
+		this.status = SellStatus.SELLING;
+	}
+
 	private void addImages(List<ProductImage> images) {
 		this.images = new ArrayList<>(images);
 		for (ProductImage image : images) {
@@ -63,6 +70,10 @@ public class Product {
 
 	public static Product create(String title, String content, Integer price, List<ProductImage> images) {
 		return new Product(title,content,price, images);
+	}
+
+	public static Product create(String title, String content, Integer price) {
+		return new Product(title,content,price);
 	}
 
 	public void update(String title, String content, Integer price) {
