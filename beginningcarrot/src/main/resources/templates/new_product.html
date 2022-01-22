@@ -76,7 +76,12 @@
                 location.href="/products";
             },
             error: function (error) {
-                alert(error);
+                let e = error.responseJSON;
+                if(e.codeName==="FIL-002") {
+                    alert(e.message);
+                } else {
+                    alert(e.errors[0].reason);
+                }
             }
         });
     }

@@ -2,6 +2,8 @@ package numble.beginningcarrot.product.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +56,7 @@ public class ProductController {
 	 * 새 Product 생성
 	 */
 	@PostMapping("/new")
-	public ResponseEntity<Void> createProduct(@ModelAttribute ProductCreateRequest request) {
+	public ResponseEntity<Void> createProduct(@Valid @ModelAttribute ProductCreateRequest request) {
 		productService.addProduct(request.toProduct(), request.getImages());
 		return ResponseEntity.ok().build();
 	}

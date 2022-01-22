@@ -28,7 +28,7 @@ public enum ErrorCode {
     FILE_MAX_SIZE_EXCEEDED(400,"FIL-002","파일 크기는 5MB 이하를 첨부해주세요."),
     FILE_NUMBER_INSUFFICIENT(400,"FIL-003", "파일은 최소 1개 이상 첨부하여야 합니다."),
     FILE_NOT_FOUND(400, "FIL-004", "파일을 첨부해주세요.");
-    
+
     private final int status;
     private final String codeName;
     private final String message;
