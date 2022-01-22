@@ -14,6 +14,8 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import numble.beginningcarrot.common.advice.exception.BusinessException;
+import numble.beginningcarrot.common.advice.exception.ErrorCode;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +59,7 @@ public class S3Strategy {
 
 	private void checkFileValid(MultipartFile file){
 		if(file.isEmpty())
-			throw new NoSuchElementException();
+			throw new BusinessException(ErrorCode.FILE_NOT_FOUND);
 	}
 
 	/** /저장폴더/현재시간키값 **/

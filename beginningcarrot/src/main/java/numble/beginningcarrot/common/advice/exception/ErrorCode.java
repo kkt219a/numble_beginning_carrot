@@ -21,8 +21,14 @@ public enum ErrorCode {
     NOT_READABLE_MESSAGE(400,"COM-006", "값을 읽을 수 없습니다. 올바른 형태인지 확인해주세요."),
     MISSING_REQUEST_PART(400,"COM-007", "필요한 파일의 키 값이 존재하지 않습니다. API DOCS를 다시 확인해주세요."),
     MISSING_REQUEST_PARAMETER(400,"COM-008","필요한 파라미터 키 값이 존재하지 않습니다. API DOCS를 다시 확인해주세요."),
-    REQUEST_REJECT(400,"COM-009", "URL에 올바르지 않은 문자가 포함되어있습니다. 다시 확인해주세요. ");
+    REQUEST_REJECT(400,"COM-009", "URL에 올바르지 않은 문자가 포함되어있습니다. 다시 확인해주세요. "),
 
+    //FILE
+    FILE_PROCESS_ERROR(500, "FIL-001","파일 처리에 문제가 발생했습니다."),
+    FILE_MAX_SIZE_EXCEEDED(400,"FIL-002","파일 크기는 5MB 이하를 첨부해주세요."),
+    FILE_NUMBER_INSUFFICIENT(400,"FIL-003", "파일은 최소 1개 이상 첨부하여야 합니다."),
+    FILE_NOT_FOUND(400, "FIL-004", "파일을 첨부해주세요.");
+    
     private final int status;
     private final String codeName;
     private final String message;

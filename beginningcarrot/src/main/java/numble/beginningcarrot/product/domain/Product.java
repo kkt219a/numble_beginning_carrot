@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import numble.beginningcarrot.common.advice.exception.BusinessException;
+import numble.beginningcarrot.common.advice.exception.ErrorCode;
 
 @Entity
 @Getter
@@ -64,7 +66,7 @@ public class Product {
 	private void validateImageSize(List<ProductImage> images) {
 		Objects.requireNonNull(images);
 		if(images.size()<1) {
-			throw new IllegalArgumentException();
+			throw new BusinessException(ErrorCode.FILE_NUMBER_INSUFFICIENT);
 		}
 	}
 
