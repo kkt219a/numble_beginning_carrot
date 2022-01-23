@@ -1,4 +1,4 @@
-package numble.beginningcarrot.product.domain;
+package numble.beginningcarrot.account.domain;
 
 import java.util.Objects;
 
@@ -6,28 +6,27 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import numble.beginningcarrot.common.file.domain.File;
 
 @Entity
-@DiscriminatorValue(value="Product")
+@DiscriminatorValue(value = "Profile")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductImage extends File {
+public class ProfileImage extends File {
 	/** Only Relation Mapping N:1 **/
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="PRODUCT_ID")
-	private Product product;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ACCOUNT_ID")
+	private Account account;
 
-	public ProductImage(String fileName, String folderName, Long fileSize) {
+	public ProfileImage(String fileName, String folderName, Long fileSize) {
 		super(fileName, folderName, fileSize);
 	}
 
-	public void addProduct(Product product) {
-		Objects.requireNonNull(product);
-		this.product = product;
+	public void addAccount(Account account) {
+		Objects.requireNonNull(account);
+		this.account = account;
 	}
-
 }

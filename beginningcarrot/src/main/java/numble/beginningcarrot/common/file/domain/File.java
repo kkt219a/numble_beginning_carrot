@@ -1,4 +1,4 @@
-package numble.beginningcarrot.file.domain;
+package numble.beginningcarrot.common.file.domain;
 
 import java.util.Objects;
 
@@ -15,13 +15,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import numble.beginningcarrot.common.base.BaseEntity;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="FTYPE")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class File {
+public class File extends BaseEntity {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(columnDefinition = "TEXT")
@@ -41,5 +42,4 @@ public class File {
 		Objects.requireNonNull(folderName);
 		Objects.requireNonNull(fileSize);
 	}
-
 }

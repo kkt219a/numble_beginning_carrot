@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<form role="form" id="createForm" th:object="${productForm}">
+<form role="form" id="createForm">
     <div class="top_stack_div">
         <a th:href="@{/products}">
             <img src="/image/logo/arrow.png" class="top_stack_arrow">
@@ -33,17 +33,15 @@
         </div>
     </div>
     <div>
-        <input type="text" name="title" placeholder="제목" class="form-control form-control-custom" th:field="*{title}">
+        <input type="text" name="title" placeholder="제목" class="form-control form-control-custom">
         <select name="category" class="form-control form-control-custom">
             <option>카테고리</option>
             <option>가전제품</option>
         </select>
-        <input type="number" name="price" placeholder="가격(원)" class="form-control form-control-custom"
-               th:field="*{price}">
+        <input type="number" name="price" placeholder="가격(원)" class="form-control form-control-custom">
         <textarea name="content" placeholder="게시글 내용을 작성해주세요."
                   class="form-control form-control-custom"
                   style="height:250px"
-                  th:field="*{content}"
         ></textarea>
     </div>
 </form>

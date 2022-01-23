@@ -21,7 +21,8 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 
+	@Transactional
 	public void addProduct(Product product, List<MultipartFile> images) {
-
+		productRepository.save(product);
 	}
 }

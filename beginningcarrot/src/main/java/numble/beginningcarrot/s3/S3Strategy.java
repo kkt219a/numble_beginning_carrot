@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import numble.beginningcarrot.common.advice.exception.BusinessException;
 import numble.beginningcarrot.common.advice.exception.ErrorCode;
+import numble.beginningcarrot.common.file.domain.File;
 
 @Service
 @RequiredArgsConstructor
@@ -51,10 +52,8 @@ public class S3Strategy {
 		return uploadFile;
 	}
 
-	public String getFileUrl(S3FileDto file){
-		String url = s3Config.getDomain() + file.getFolderName() + file.getFileName();
-		log.info("AWS S3에서 파일 주소 가져오기: "+url);
-		return url;
+	public String getFileUrl(File file){
+		return s3Config.getDomain() + file.getFolderName() + file.getFileName();
 	}
 
 	private void checkFileValid(MultipartFile file){

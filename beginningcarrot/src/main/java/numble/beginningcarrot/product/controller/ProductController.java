@@ -37,9 +37,17 @@ public class ProductController {
 	}
 
 	@GetMapping("/new")
-	public String createProductForm(Model model) {
-		model.addAttribute("productForm",new ProductCreateRequest());
+	public String createProductForm() {
 		return "new_product";
+	}
+
+	/**
+	 * 새 Product 생성
+	 */
+	@PostMapping("/new")
+	public ResponseEntity<Void> createProduct(@Valid @ModelAttribute ProductCreateRequest request) {
+		productService.addProduct(request.toProduct(), request.getImages());
+		return ResponseEntity.ok().build();
 	}
 
 	/**
@@ -49,15 +57,6 @@ public class ProductController {
 	 */
 	@GetMapping("/{productId}")
 	public ResponseEntity<Void> findProduct(@PathVariable Long productId) {
-		return ResponseEntity.ok().build();
-	}
-
-	/**
-	 * 새 Product 생성
-	 */
-	@PostMapping("/new")
-	public ResponseEntity<Void> createProduct(@Valid @ModelAttribute ProductCreateRequest request) {
-		productService.addProduct(request.toProduct(), request.getImages());
 		return ResponseEntity.ok().build();
 	}
 
